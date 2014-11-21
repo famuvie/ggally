@@ -634,6 +634,8 @@ print.ggpairs <- function(
   bottomHeightProportion = 0.1,
   spacingProportion = 0.03,
   showStrips = NULL,
+  titleGp = gpar(fontsize=15),
+  axisLabelGp = gpar(),
   ...
 ) {
 
@@ -680,7 +682,7 @@ print.ggpairs <- function(
 
   if(plotObj$title != ""){
     pushViewport(viewport(height = unit(1,"npc") - unit(.4,"lines")))
-    grid.text(plotObj$title,x = .5, y = 1, just = c(.5,1),gp=gpar(fontsize=15))
+    grid.text(plotObj$title,x = .5, y = 1, just = c(.5,1),gp=titleGp)
     popViewport()
   }
 
@@ -698,7 +700,7 @@ print.ggpairs <- function(
 
     # Left Side
     for(i in 1:numCol){
-      grid.text(plotObj$columnLabels[i],0,0.5,rot=90,just=c("centre","centre"), vp = vplayout(as.numeric(i) * 2 - 1 ,1))
+      grid.text(plotObj$columnLabels[i],0,0.5,rot=90,just=c("centre","centre"), vp = vplayout(as.numeric(i) * 2 - 1 ,1), gp = axisLabelGp)
     }
 
     popViewport()# layout
@@ -724,7 +726,8 @@ print.ggpairs <- function(
         vp = vplayout(
           ifelse(showLabels, 2*numCol, 2*numCol - 1),
           ifelse(showLabels, 2*i, 2*i - 1)
-        )
+        ),
+        gp = axisLabelGp
       )
     }
 
